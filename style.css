@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #F5E7D3; /* soft beige */
+  background: #F5E7D3; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,7 +54,7 @@ body {
   font-weight: 500;
   color: #6b6b6b;
   position: relative;
-  z-index: 2;  /* make sure buttons are above the bubble */
+  z-index: 2;  
   transition: 0.3s;
 }
 
@@ -63,9 +63,9 @@ body {
   position: absolute;
   top: 5px;
   left: 5px;
-  width: calc(50% - 10px); /* half the width minus padding */
+  width: calc(50% - 10px); 
   height: calc(100% - 10px);
-  background: #ff8c42;     /* orange bubble */
+  background: #ff8c42;
   border-radius: 25px;
   z-index: 1;
   transition: 0.3s;
@@ -75,7 +75,7 @@ body {
 /* Active button text color */
 .toggle-buttons button.active {
   color: white;
-  background: transparent; /* Changed from #ff8c42 */
+  background: transparent;
   box-shadow: none;
 }
 
@@ -83,13 +83,13 @@ body {
 .toggle-buttons .toggle-active {
   position: absolute;
   top: 5px;
-  left: 5px; /* JS will change this to 'calc(50% + 5px)' */
+  left: 5px;
   width: calc(50% - 10px);
   height: calc(100% - 10px);
   background: #ff8c42;
   border-radius: 25px;
   z-index: 1;
-  transition: all 0.3s ease-in-out; /* Smooth sliding */
+  transition: all 0.3s ease-in-out;
 }
 
 /* Forms */
