@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>HomeCooked Meals</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -35,6 +35,6 @@
     </div>
   </div>
 
-  <script src="foodapp.js"></script>
+  <script src="{{ url_for('static', filename='foodapp.js') }}"></script>
 </body>
 </html>

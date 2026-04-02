@@ -28,22 +28,22 @@ registerBtn.onclick = showRegister;
 registerForm.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const username = document.getElementById("regName").value;
+  const name = document.getElementById("regName").value;
   const email = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
 
-  const response = await fetch("http://localhost:3000/register", {
+  const response = await fetch("/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password })
+    body: JSON.stringify({ name, email, password })
   });
 
   const data = await response.json();
   if (response.ok) {
   alert(data.message);
-  showLogin(); // switches to login form automatically
+  showLogin(); 
 } else {
-  alert(data.message); // shows "You are already registered! Please log in."
+  alert(data.message); 
 }
 });
 // Login form submission
@@ -53,7 +53,7 @@ loginForm.addEventListener("submit", async function(e) {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
-  const response = await fetch("http://localhost:3000/login", {
+  const response = await fetch("/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -61,7 +61,7 @@ loginForm.addEventListener("submit", async function(e) {
 
   const data = await response.json();
   if (response.ok) {
-  window.location.href = "home.html"; // redirects to a new page
+  window.location.href = "/home"; 
 } else {
   if (response.ok) {
   alert("Registration successful! Please login.");
