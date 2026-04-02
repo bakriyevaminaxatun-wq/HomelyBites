@@ -21,9 +21,8 @@ def index():
 def register():
     data = request.get_json()
 
-    # Check if user already exists
     if User.query.filter_by(email=data['email']).first():
-        # Using 'message' so the frontend finds the text
+
         return jsonify({'message': 'Email already exists'}), 400
 
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
@@ -42,12 +41,11 @@ def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()
 
-    # Check if user exists AND if the password matches
+
     if not user or not bcrypt.check_password_hash(user.password, data['password']):
-        # Standardized to 'message' with your specific text
+
         return jsonify({'message': 'wrong email or password, please try again'}), 401
 
-    # Success case
     return jsonify({'message': f'Welcome back, {user.name}!'}), 200
 
 @app.route('/home')
