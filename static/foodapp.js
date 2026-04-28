@@ -40,12 +40,13 @@ registerForm.addEventListener("submit", async function(e) {
 
   const data = await response.json();
   if (response.ok) {
-  alert(data.message);
-  showLogin(); 
-} else {
-  alert(data.message); 
-}
+    alert(data.message);
+    showLogin();
+  } else {
+    alert(data.message);
+  }
 });
+
 // Login form submission
 loginForm.addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -61,13 +62,8 @@ loginForm.addEventListener("submit", async function(e) {
 
   const data = await response.json();
   if (response.ok) {
-  window.location.href = "/home"; 
-} else {
-  if (response.ok) {
-  alert("Registration successful! Please login.");
-  showLogin();
-} else {
-  alert(data.message);
-};
-}
+    window.location.href = "/";
+  } else {
+    alert(data.message);
+  }
 });

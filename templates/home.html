@@ -2,13 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Welcome to HomelyBites</title>
+  <title>HomelyBites</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-  <div class="container">
-    <h1 class="logo">Homely<span>Bites</span></h1>
-    <p style="text-align:center; margin-top: 20px;">Welcome!</p>
+<body class="home-body">
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <img class="nav-icon" src="{{ url_for('static', filename='uploads/logo.png') }}" />  
+    </div>
+
+    <div class="nav-search">
+      <input type="text" placeholder="Search for food..." />
+      <button><img src="{{ url_for('static', filename='uploads/search_icon.png') }}" alt="Search" /></button>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+      <a href="/switch-mode" class="switch-btn">⇄ Switch to Seller</a>
+      <a href="#" class="cart-btn">
+        <img src="{{ url_for('static', filename='uploads/cart_icon.png') }}" alt="Cart" />
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>      
+      
+      <a href="#" class="profile-btn" onclick="document.getElementById('authModal').style.display='flex'">
+        <img src="{{ url_for('static', filename='uploads/user.png') }}" alt="Profile" />
+      </a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg-orange">
+      <div class="hero-text">
+        <h1>Homemade food delivered with love.</h1>
+        <p>Discover meals made by home chefs in your neighborhood.</p>
+      </div>
+    </div>
+    <div class="hero-bg-image"></div>
   </div>
+
+  <div class="cta-section">
+    <a href="#" class="cta-btn" onclick="document.getElementById('authModal').style.display='flex'">Order Now</a>
+  </div>
+  <div class="how-it-works">
+  <h2 class="section-title-center">How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="browse-icon">
+        <img src="{{ url_for('static', filename='uploads/browse_icon.png') }}" alt="Browse">
+      </div> 
+      <h3>Browse</h3>
+      <p>Explore homemade meals from cooks in your neighborhood</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="cart-icon">🛒</div>
+      <h3>Order</h3>
+      <p>Pick your favorites and place your order in seconds</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="enjoy-icon">
+        <img src="{{ url_for('static', filename='uploads/enjoy_icon.png') }}" alt="Enjoy">
+      </div>
+      <h3>Enjoy</h3>
+      <p>Receive your meal fresh and made with love</p>
+    </div>
+  </div>
+</div>  
+<div class="carousel-section">
+  <div class="carousel">
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="{{ url_for('static', filename='uploads/HomelyBites_ad1.png') }}" alt="Ad 1">
+        </div>
+        <div class="carousel-slide">
+          <img src="{{ url_for('static', filename='uploads/HomelyBites_ad2.png') }}" alt="Ad 2">
+        </div>
+        <div class="carousel-slide">
+          <img src="{{ url_for('static', filename='uploads/HomelyBites_ad3.png') }}" alt="Ad 3">
+        </div>
+        <div class="carousel-slide">
+          <img src="{{ url_for('static', filename='uploads/HomelyBites_ad4.png') }}" alt="Ad 4">
+        </div>
+      </div>
+      <button class="carousel-btn prev" onclick="moveSlide(-1)">&#8249;</button>
+      <button class="carousel-btn next" onclick="moveSlide(1)">&#8250;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+      <span class="dot" onclick="goToSlide(3)"></span>
+    </div>
+  </div>
+</div>
+
+  <!-- Auth Modal -->
+  <div id="authModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:999; justify-content:center; align-items:center;">
+    <div class="container" style="position:relative; margin:0;">
+      <button onclick="document.getElementById('authModal').style.display='none'"
+        style="position:absolute; top:12px; right:16px; border:none; background:none; font-size:20px; cursor:pointer; z-index:10;">✕</button>
+
+      <h1 class="logo">Homely<span>Bites</span></h1>
+
+      <div class="form-box">
+        <div class="toggle-buttons">
+          <div class="toggle-active" id="modalBubble"></div>
+          <button class="active" id="modalLoginBtn">Login</button>
+          <button id="modalRegisterBtn">Register</button>
+        </div>
+
+        <form id="modalLoginForm">
+          <input type="email" id="modalLoginEmail" placeholder="Email" required>
+          <input type="password" id="modalLoginPassword" placeholder="Password" required>
+          <button type="submit">Login</button>
+        </form>
+
+        <form id="modalRegisterForm" class="hidden">
+          <input type="text" id="modalRegName" placeholder="Full Name" required>
+          <input type="email" id="modalRegEmail" placeholder="Email" required>
+          <input type="password" id="modalRegPassword" placeholder="Password" required>
+          <button type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Carousel ──────────────────────────────────────────
+    let current = 0;
+    const total = 4;
+
+    function moveSlide(dir) {
+      current = (current + dir + total) % total;
+      updateCarousel();
+    }
+
+    function goToSlide(index) {
+      current = index;
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      document.getElementById('carouselTrack').style.transform = `translateX(-${current * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    setInterval(() => moveSlide(1), 4000);
+
+    // ── Modal backdrop close ───────────────────────────────
+    document.getElementById('authModal').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+
+    // ── Modal toggle buttons ──────────────────────────────
+    const modalBubble = document.getElementById('modalBubble');
+    const modalLoginBtn = document.getElementById('modalLoginBtn');
+    const modalRegisterBtn = document.getElementById('modalRegisterBtn');
+    const modalLoginForm = document.getElementById('modalLoginForm');
+    const modalRegisterForm = document.getElementById('modalRegisterForm');
+
+    modalLoginBtn.onclick = function() {
+      modalBubble.style.left = '5px';
+      modalLoginBtn.classList.add('active');
+      modalRegisterBtn.classList.remove('active');
+      modalLoginForm.classList.remove('hidden');
+      modalRegisterForm.classList.add('hidden');
+    };
+
+    modalRegisterBtn.onclick = function() {
+      modalBubble.style.left = 'calc(50% + 5px)';
+      modalRegisterBtn.classList.add('active');
+      modalLoginBtn.classList.remove('active');
+      modalRegisterForm.classList.remove('hidden');
+      modalLoginForm.classList.add('hidden');
+    };
+
+    // ── Modal register submit ─────────────────────────────
+    modalRegisterForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('modalRegName').value,
+          email: document.getElementById('modalRegEmail').value,
+          password: document.getElementById('modalRegPassword').value
+        })
+      });
+      const data = await response.json();
+      alert(data.message);
+      if (response.ok) modalLoginBtn.click();
+    });
+
+    // ── Modal login submit ────────────────────────────────
+    modalLoginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('modalLoginEmail').value,
+          password: document.getElementById('modalLoginPassword').value
+        })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        document.getElementById('authModal').style.display = 'none';
+        alert(data.message);
+        window.location.reload();
+      } else {
+        alert(data.message);
+      }
+    });
+    async function handleOrderNow(e) {
+  e.preventDefault();
+  const res = await fetch('/check-session');
+  const data = await res.json();
+  if (data.logged_in) {
+    window.location.href = '/menu';
+  } else {
+    document.getElementById('authModal').style.display = 'flex';
+  }
+}
+
+  let cart = [];
+
+  function addToCart(id, name, price) {
+    const existing = cart.find(item => item.id === id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ id, name, price, quantity: 1 });
+    }
+    updateCartBadge();
+  }
+
+  function updateCartBadge() {
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cartBadge').textContent = total;
+  }
+  </script>
+
 </body>
 </html>
